@@ -67,10 +67,3 @@ a.animated-button.thar-two:before {
   background: #5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
-
-
-@media(max-width:576px){
-
-
-
-}
