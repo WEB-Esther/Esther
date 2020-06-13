@@ -5,19 +5,19 @@ a.animated-button.thar-one {
   position: relative;
   border: 2px solid #5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
-  width:25%
+  width:100%
 }
 a.animated-button.thar-one:hover {
   color: #fff !important;
   background-color: transparent;
   text-shadow: none;
-  width:25%
+  width:100 %
 }
 a.animated-button.thar-one:hover:before {
   bottom: 0%;
   top: auto;
   height: 100%;
-  width: 100%
+
 }
 a.animated-button.thar-one:before {
   display: block;
@@ -41,19 +41,18 @@ a.animated-button.thar-two {
   position: relative;
   border: 2px solid#5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
-  width:25%
+  width:100%
 }
 a.animated-button.thar-two:hover {
   color: #fff !important;
   background-color: transparent;
   text-shadow: ntwo;
-  width:25%
+  width:100%
 }
 a.animated-button.thar-two:hover:before {
   top: 0%;
   bottom: auto;
   height: 100%;
-  width: 100%
 }
 a.animated-button.thar-two:before {
   display: block;
@@ -67,4 +66,11 @@ a.animated-button.thar-two:before {
   color: #fff !important;
   background: #5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+
+@media(max-width:576px){
+
+
+
 }
