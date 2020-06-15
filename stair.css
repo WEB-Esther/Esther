@@ -32,7 +32,7 @@ a.animated-button.thar-one:before {
   background: #5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
-
+/* --------------------------------- */
 
 a.animated-button.thar-two {
   color:  #fff;
@@ -67,3 +67,5 @@ a.animated-button.thar-two:before {
   background: #5732db;
   transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
 }
+
+.col-md-3col-sm-3col-xs-6
