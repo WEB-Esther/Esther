@@ -1,5 +1,5 @@
 a.animated-button.thar-one {
-  color: #370678;
+  color:  #fff;
   cursor: pointer;
   display: block;
   position: relative;
@@ -35,7 +35,7 @@ a.animated-button.thar-one:before {
 
 
 a.animated-button.thar-two {
-  color: #370678;
+  color:  #fff;
   cursor: pointer;
   display: block;
   position: relative;
