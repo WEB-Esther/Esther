@@ -50,16 +50,16 @@ print('''
         <!-- Links -->
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="index.py?id=HTML">Home
+            <a class="nav-link" href="index.py">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="idea_bank.py?id=HTML">아이디어 뱅크
+            <a class="nav-link" href="idea_bank.py">아이디어 뱅크
             <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="empty_room.py?id=HTML">빈 방
+            <a class="nav-link" href="empty_room.py">빈 방
             <span class="sr-only">(current)</span></a>
           </li>
 
@@ -71,7 +71,7 @@ print('''
               <a class="dropdown-item" href="파일 만들고 링크 ㄱ">인빈</a>
               <a class="dropdown-item" href="파일 만들고 링크 ㄱ">준영</a>
               <a class="dropdown-item" href="파일 만들고 링크 ㄱ">희찬</a>
-              <a class="dropdown-item" href="seungwoo.py?id=HTML">승우</a>
+              <a class="dropdown-item" href="seungwoo.py">승우</a>
             </div>
           </li>
 
