@@ -26,30 +26,13 @@
     outline: none;
 }
 
-body{
-    font-family: 'Roboto Condensed', sans-serif;
-    height: 100vh;
-    overflow: hidden;
-    background: #e4f2f0;
-    background-size: cover;
-}
+
 .main{
 position: relative;
 width: 500px;
 height: 500px;
 }
 
-.main:after{
-    position: absolute;
-    content: '';
-    width: 32px;
-    height: 32px;
-    background: url('http://nicoles.dev/images/arrow.png') no-repeat;
-    background-size: 32px;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-}
 
 .box{
 width: 100%;
@@ -117,8 +100,8 @@ transform: translate(-50%, -50%);
 .spin{
     font-family: 'Roboto Condensed', sans-serif;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 90%;
+    left: 10%;
     transform: translate(-50%, -50%);
     width: 75px;
     height: 75px;
@@ -224,7 +207,7 @@ transform: translate(-50%, -50%);
 
 <br>
 
-<h1 style="font-size: 35px">&nbsp@@@@룰렛 게임!!@@@@</h1>
+<h1 style="font-size: 35px">&nbsp&nbsp&nbsp&nbsp룰렛 게임!!</h1>
 
 <div class="main">
     <div id="box" class="box">
@@ -256,12 +239,9 @@ transform: translate(-50%, -50%);
     </div>
 </div>
 </div>
-
+<div>
 <button class="spin" onclick="myfunction()">Spin!</button>
-
-<script src="script.js">
-</script>
-
+</div>
 <script>
 function myfunction(){
     var x = 1024;
