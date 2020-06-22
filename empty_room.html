@@ -19,122 +19,13 @@
   <link rel="stylesheet" type="text/css" href="styles.css">
 
 <style>
-*{
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    outline: none;
-}
-
-
-.main{
-position: relative;
-width: 500px;
-height: 500px;
-}
-
-.main:after{
-    position: absolute;
-    content: '';
-    width: 32px;
-    height: 32px;
-    background: url('http://nicoles.dev/images/arrow.png') no-repeat;
-    background-size: 32px;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.box{
-width: 100%;
-height: 100%;
-position: relative;
-border-radius: 50%;
-border: 9px solid black;
-overflow: hidden;
-transition: all ease 3s;
-
-}
-
-span{
-width: 50%;
-height: 50%;
-display: inline-block;
-position: absolute;
-}
-
-.span1{
-clip-path: polygon(0 92%, 100% 50%, 0 8%);
-background-color: #618d87;
-top: 120px;
-left: 0;
-}
-.span2{
-clip-path: polygon(100% 92%, 0 50%, 100% 8%);
-background-color: rgb(90, 90, 90);
-top: 120px;
-right: 0;
-}
-.span3{
-clip-path: polygon(50% 0%, 8% 100%, 92% 100%);
-background-color: #70416d;
-bottom: 0;
-left: 120px;
-}
-.span4{
-clip-path: polygon(50% 100%, 92% 0, 8% 0);
-background-color: #170a19;
-top: 0;
-left: 120px;
-
-}
-
-.box2{
-width: 100%;
-height: 100%;
-transform: rotate(-135deg);
-}
-span b{
-    font-family: 'Roboto Condensed', sans-serif;
-width: 65px;
-height: 65px;
-line-height: 20px;
-color: rgb(228, 226, 226);
-font-size: 18px;
-text-align: center;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-}
-
-.spin{
-    font-family: 'Roboto Condensed', sans-serif;
-    position: absolute;
-    top: 90%;
-    left: 10%;
-    transform: translate(-50%, -50%);
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    border: 2px solid black;
-    background-color: rgb(46, 77, 77);
-    color: #fff;
-    box-shadow: 0 5px 10px #000;
-    font-weight: bold;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-.spin:active{
-    width: 60px;
-    height: 60px;
-    font-size: 20px;
-}
-
-.main.animate:after{
-    animation: animateArrow 0.7s ease infinite;
-
+body {
+  font-family: Arial, Helvetica, "Liberation Sans", FreeSans, sans-serif;
+  background-color: #000;
+  margin:0;
+  padding:0;
+  border-width:0;
+  cursor: pointer;
 }
 </style>
 
@@ -218,58 +109,579 @@ transform: translate(-50%, -50%);
 
 <br>
 
-<h1 style="font-size: 35px">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp룰렛 게임!!&nbsp&nbsp||</h1>
-
-<div class="main">
-    <div id="box" class="box">
-        <div class="box1">
-        <span class="span1"><b><h3>-4</h3>
-            <br>
-        </b></span>
-        <span class="span2"><b><h2>+2</h2>
-            <br>
-        </b></span>
-        <span class="span3"><b><h3>-4</h3>
-            <br>
-        </b></span>
-    <span class="span4"><b><h1><strong>+5</strong></h1></b></span>
-    </div>
-    <div class="box2">
-        <span class="span1"><b><h2>-10</h2>
-            <br>
-        </b></span>
-        <span class="span2"><b><h1>+1</h1>
-            <br>
-        </b></span>
-        <span class="span3"><b><h2>+3</h2>
-            <br>
-        </b></span>
-    <span class="span4"><b><h1><strong>+5</strong></h1>
-        <br>
-    </b></span>
-    </div>
-</div>
-</div>
-
-<button class="spin" onclick="myfunction()">Spin!</button>
-
 <script>
-function myfunction(){
-    var x = 1024;
-    var y = 9999;
+"use strict";
 
-    var deg = Math.floor(Math.random() * (x - y)) + y;
+window.addEventListener("load",function() {
 
-    document.getElementById('box').style.transform = "rotate("+deg+"deg)";
+  const triWidthMin = 10; // length of triangle side 5..triWidthMax
+  const triWidthMax = 30; // length of triangle side triWidthMin..50
+  const DHUE = 1; // integer 1-10 - hue change by step
+  const DLUM = 1; // 0.1 - 5 - lightness change by step
+  const SPEED = 5;
 
-    var element = document.getElementById('main');
-    element.classList.remove('animate');
-    setTimeout(function(){
-        element.classList.add('animate');
+  let canv, ctx;    // canvas and context
+  let canvbg, ctxbg;    // background canvas and context
 
-    }, 3000);
+  let maxx, maxy;   // canvas dimensions
+
+  let triWidth, triRad;
+  let triHeight;
+  let grid;
+  let nbx, nby;
+  let hnbx, hnby; // number of triangles in the half of the width, height of the canvas
+
+  let groups;
+  let listReachable;
+
+// for animation
+  let tStampRef;   // time stamp ref for animation
+  let events;
+  let colorMode;
+
+// shortcuts for Math.
+  const mrandom = Math.random;
+  const mfloor = Math.floor;
+  const mround = Math.round;
+  const mceil = Math.ceil;
+  const mabs = Math.abs;
+  const mmin = Math.min;
+  const mmax = Math.max;
+
+  const mPI = Math.PI;
+  const mPIS2 = Math.PI / 2;
+  const mPIS3 = Math.PI / 3;
+  const m2PI = Math.PI * 2;
+  const m2PIS3 = Math.PI * 2 / 3;
+  const msin = Math.sin;
+  const mcos = Math.cos;
+  const matan2 = Math.atan2;
+
+  const mhypot = Math.hypot;
+  const msqrt = Math.sqrt;
+
+  const rac3   = msqrt(3);
+  const rac3s2 = rac3 / 2;
+
+//------------------------------------------------------------------------
+
+function alea (mini, maxi) {
+// random number in given range
+
+  if (typeof(maxi) == 'undefined') return mini * mrandom(); // range 0..mini
+
+  return mini + mrandom() * (maxi - mini); // range mini..maxi
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+function intAlea (mini, maxi) {
+// random integer in given range (mini..maxi - 1 or 0..mini - 1)
+//
+  if (typeof(maxi) == 'undefined') return mfloor(mini * mrandom()); // range 0..mini - 1
+  return mini + mfloor(mrandom() * (maxi - mini)); // range mini .. maxi - 1
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  function removeElement(array, element) {
+    let idx = array.indexOf(element);
+    if (idx == -1) throw ('Bug ! indexOf -1 in removeElement');
+    array.splice(idx, 1);
+  } // removeElement
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  function randomElement(array) {
+    return array[intAlea(0, array.length)];
+  }
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  function arrayShuffle (array) {
+/* randomly changes the order of items in an array
+   only the order is modified, not the elements
+*/
+  let k1, temp;
+  for (let k = array.length - 1; k >= 1; --k) {
+    k1 = intAlea(0, k + 1);
+    temp = array[k];
+    array[k] = array[k1];
+    array[k1] = temp;
+    } // for k
+  return array
+  } // arrayShuffle
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+/* returns intermediate point between p0 and p1,
+  alpha = 0 whill preturn p0, alpha = 1 will return p1
+  values of alpha outside [0,1] may be used to compute points outside the p0-p1 segment
+*/
+  function intermediate (p0, p1, alpha) {
+
+    return [(1 - alpha) * p0[0] + alpha * p1[0],
+            (1 - alpha) * p0[1] + alpha * p1[1]];
+  } // function intermediate
+
+//------------------------------------------------------------------------
+
+function rotate3(t) {
+  let ny = (t[0]-t[1] + 1) >> 1;
+  return [ny - t[0] - t[1], ny];
+} // rotate 3
+
+//------------------------------------------------------------------------
+
+function Triangle (kx, ky, color) {
+
+/* constructor */
+
+  this.color = color ? color : `hsl(${intAlea(360)},100%,50%)`;
+  this.kx = kx;
+  this.ky = ky;
+  this.kxc = kx - hnbx;
+  this.kyc = ky - hnby;
+  this.setXY(kx, ky);
+
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Triangle.prototype.setXY = function(kx, ky) {
+
+  let xa, ya, vertices, deltay, upsideDown,tw;
+
+// centre of this triangle (middle of height, not gravity centre)
+  ya = maxy / 2 + this.kyc * triHeight;
+  xa = maxx / 2 + this.kxc * triWidth / 2;
+
+  vertices = [[],[],[]];
+  let modTriWidth = triWidth; // + GAPTRI ;
+
+  deltay = modTriWidth * msqrt(3) / 4;
+  tw = modTriWidth / 2;
+  this.upsideDown = !!((this.kxc + this.kyc) & 1);
+  if (this.upsideDown) deltay = -deltay;
+
+  vertices[0][0] = xa;
+  vertices[0][1] = ya - deltay;
+
+  vertices[1][0] = xa + tw ;
+  vertices[1][1] = ya + deltay;
+
+  vertices[2][0] = xa - tw ;
+  vertices[2][1] = ya + deltay;
+
+  this.kx = kx;
+  this.ky = ky;
+  this.xa = xa;
+  this.ya = ya;
+  this.xg = xa;              // gravity centre
+  this.yg = ya + deltay / 3;
+  this.vertices = vertices;
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Triangle.prototype.addGrp = function(cell) {
+
+  if (! this.grp) {
+    this.grp = new Group(this);
+  }
+  cell.grp = this.grp; // cells really share the same group
+  this.grp.add(cell);
+}
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Triangle.prototype.drawArc = function(kvertex, stroke, width) {
+
+  let ang0;
+  let xc = this.vertices[kvertex][0];
+  let yc = this.vertices[kvertex][1];
+
+  if (this.upsideDown) {
+    ang0 = - m2PIS3 - kvertex * m2PIS3
+  } else {
+    ang0 =  mPIS3 + kvertex * m2PIS3
+  }
+
+  ctx.beginPath();
+  ctx.arc(xc, yc, triRad, ang0, ang0 + mPIS3);
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = width;
+  ctx.stroke();
+} // Triangle.prototype.drawArc
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Triangle.prototype.drawToSide = function(nextSide) {
+
+  if (this.from == undefined) throw ('from undefined !!!');
+
+  if (! this.evolColor) {
+    this.evolColor = {};
+    this.evolColor.hue = intAlea(360);
+    this.evolColor.dhue = intAlea(2) ? DHUE : (360 - DHUE);
+    this.evolColor.lum = intAlea(40,80);
+    this.evolColor.dlum = intAlea(2) ? -DLUM : DLUM;
+    this.evolColor.width = alea(0.5, 2.5);
+    this.evolColor.dWidth = 0.1;
+    this.evolColor = nextColor(this.evolColor);
+  }
+
+  let kvert = [[0,1,0],[1,0,2],[0,2,0]][this.from][nextSide];
+  this.drawArc(kvert, this.evolColor.color, this.evolColor.width);
+  this.neighbours[nextSide].from = 2 - nextSide;
+  if (! this.neighbours[nextSide].evolColor) this.neighbours[nextSide].evolColor = nextColor(this.evolColor);
+} // Triangle.prototype.drawToSide
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Triangle.prototype.drawGroup = function (destCell) {
+
+  let kx1,ky1, kx2, ky2, side, side1, side2, cell1, cell2;
+
+  side = this.neighbours.indexOf(destCell); // side by which we are getting out of current Triangle
+
+  if (side == -1) throw ('bug ! side not found in drawGroup');
+
+  [kx1, ky1] = rotate3 ([this.kxc, this.kyc]); // cell rotated around center
+  cell1 = grid[hnby + ky1][hnbx + kx1];
+  side1 = (side + (this.upsideDown ? 2 : 1)) % 3;
+
+  [kx2, ky2] = rotate3 ([kx1, ky1]); // cell rotated around center
+  cell2 = grid[hnby + ky2][hnbx + kx2];
+  side2 = (side + (this.upsideDown ? 1 : 2)) % 3;
+
+  if (this.kxc == 0 && this.kyc == 0) {
+    this.from = 1;
+    this.drawToSide(0);
+    this.drawToSide(2);
+    this.from = 2;
+    this.drawToSide(1);
+    return ;
+  }
+
+  this.drawToSide(side);
+  cell1.drawToSide (side1);
+  cell2.drawToSide (side2);
+
+  if (this.kxc != 0 && cell1.kxc != 0 && cell2.kxc != 0) {
+// not on axis, do symmetries
+
+    let cell = grid[hnby + this.kyc][hnbx - this.kxc];
+    side = 2 - side;
+    cell.drawToSide (side);
+
+    cell1 = grid[hnby + ky1][hnbx - kx1];
+    side1 = 2 - side1;
+    cell1.drawToSide (side1);
+
+    cell2 = grid[hnby + ky2][hnbx - kx2];
+    side2 = 2 - side2;
+    cell2.drawToSide (side2);
+
+  } else { // at least one of 3 cells on vertical axis
+    let cells = [this, cell1, cell2];
+    let sides = [side, side1, side2];
+    // rotate 3 cells so that the first is on verticcal axis
+    while (cells[0].kxc != 0) {
+      cells.push(cells.shift());
+      sides.push(sides.shift());
+    }
+   // symmetry in 1st cell
+    if (cells[0].from == 1) {
+      cells[0].drawToSide(2 - sides[0]);
+    } else if (sides[0] == 1) {
+      cells[0].from = 2 - cells[0].from;
+      cells[0].drawToSide(1);
+    }
+   // symmetry in 2nd cell
+    if (cells[1].upsideDown) {
+      if (cells[1].from == 0) {
+        cells[1].drawToSide(3 - sides[1]);
+      } else if (sides[1] == 0) {
+        cells[1].from = 3 - cells[1].from;
+        cells[1].drawToSide(0);
+      }
+    } else {
+      if (cells[1].from == 2) {
+        cells[1].drawToSide(1 - sides[1]);
+      } else if (sides[1] == 2) {
+        cells[1].from = 1 - cells[1].from;
+        cells[1].drawToSide(2);
+      }
+    }
+   // symmetry in 3rd cell
+    if (cells[2].upsideDown) {
+      if (cells[2].from == 2) {
+        cells[2].drawToSide(1 - sides[2]);
+      } else if (sides[2] == 2) {
+        cells[2].from = 1 - cells[2].from;
+        cells[2].drawToSide(2);
+      }
+    } else {
+      if (cells[2].from == 0) {
+        cells[2].drawToSide(3 - sides[2]);
+      } else if (sides[2] == 0) {
+        cells[2].from = 3 - cells[2].from;
+        cells[2].drawToSide(0);
+      }
     }
 
+  }
+
+
+} // Triangle.prototype.drawGroup
+
+//------------------------------------------------------------------------
+
+  function nextColor(evolColor) {
+
+    let hue = evolColor.hue;
+    let dhue = evolColor.dhue;
+    let lum = evolColor.lum;
+    let dlum = evolColor.dlum;
+    let width = evolColor.width;
+    let dWidth = evolColor.dWidth;
+
+    let color;
+    switch (colorMode) {
+      case 0:
+        color = `hsl(${hue},100%,50%)`;
+        hue = (hue + dhue) % 360;
+        break;
+      case 1:
+        color = `hsl(${hue},100%,${lum}%)`;
+        lum += dlum;
+        if (lum > 80) dlum = -mabs(dlum);
+        if (lum < 40) dlum = mabs(dlum);
+        break;
+      case 2:
+        color = `hsl(${hue},100%,${lum}%)`;
+        lum += dlum;
+        if (lum > 80) dlum = -mabs(dlum);
+        if (lum < 40) dlum = mabs(dlum);
+        hue = (hue + dhue) % 360;
+        break;
+
+    } // switch
+    width += dWidth;
+    if (width > 2.5) dWidth = -mabs(dWidth);
+    if (width < 0.5) dWidth = mabs(dWidth);
+
+    return {hue: hue, dhue: dhue,
+            lum: lum, dlum: dlum,
+            width: width, dWidth: dWidth,
+            color: color};
+  } // returnColor
+//------------------------------------------------------------------------
+
+function Group (cell) {
+  this.cells = new Set([cell]);
+  this.unused = true;
+  groups.push(this);
+}
+
+Group.prototype.add = function (otherCell) {
+  this.cells.add(otherCell); // does nothing if same cell
+}
+
+//------------------------------------------------------------------------
+let animate;
+
+{ // scope for animate
+
+let animState = 0;
+let currCell;
+
+animate = function(tStamp) {
+
+  let event;
+  let grp, neighs, found, tinit;
+
+  event = events.pop();
+  if (event && event.event == 'reset') animState = 0;
+  if (event && event.event == 'click') animState = 0;
+  window.requestAnimationFrame(animate)
+
+  tinit = performance.now();
+  do {
+
+    switch (animState) {
+
+      case 0 :
+        if (startOver()) {
+          ++animState;
+          listReachable = new Set([grid[hnby][hnbx]]);
+//          grp.draw(returnColor());
+          grid[hnby][hnbx].grp.unused = false;
+          grid[hnby][hnbx].drawGroup(grid[hnby][hnbx + 1],'#f00');
+//          grid[hnby][hnbx + 1 ].drawGroup(grid[hnby - 1][hnbx + 1],'#f00');
+//          animState = 20;
+        }
+        break;
+
+      case 1 :
+        if (listReachable.size == 0) {
+          animState = 10; // finished
+          break;
+        }
+//        currGrp = listReachable.values().next().value;
+        currCell = [...listReachable][0];
+        ++animState;
+
+      case 2:
+        neighs = currCell.neighbours.filter(cell => cell); // remove undefined neighbours
+        arrayShuffle(neighs);
+        found = neighs.find(cell => {
+          if (cell.grp.unused === false) return false;
+          let [kx1,ky1] = rotate3([cell.kxc, cell.kyc]);
+          if (mabs (kx1) > hnbx || mabs (ky1) > hnby) return false;
+          [kx1,ky1] = rotate3([kx1,ky1]);
+          if (mabs (kx1) > hnbx || mabs (ky1) > hnby) return false;
+          return true;
+        });
+        if (found === undefined) {
+          listReachable.delete(currCell); // no unused neighbour, remove this cell from list
+          animState = 1;
+          break;
+        }
+
+        currCell.drawGroup(found);
+        currCell = found;
+        currCell.grp.unused = false;
+        listReachable.add(currCell);
+        break;
+
+    } // switch
+  } while ((animState == 1 || animState == 2) && (performance.now() - tinit < SPEED));
+
+} // animate
+} // scope for animate
+
+//------------------------------------------------------------------------
+
+function createGrid() {
+
+  let kx1, ky1, cell;
+
+  grid = [];
+  groups = [];
+
+  for (let ky = 0; ky < nby; ++ky) {
+    grid[ky] = [];
+    for (let kx = 0; kx < nbx; ++kx) {
+      grid[ky][kx] = new Triangle (kx, ky);
+    } // for kx
+  } // for ky
+
+// calculate image of each cell by a 120° rotation and symmetry
+// calculate neighbours
+  for (let ky = 0; ky < nby; ++ky) {
+    for (let kx = 0; kx < nbx; ++kx) {
+
+      cell = grid[ky][kx];
+
+      if (! cell.grp) {
+        cell.addGrp(cell);
+
+  // symmetry / rotations
+        kx1 = 2 * hnbx - kx; // always exists - may be same cell
+        ky1 = ky;
+        cell.addGrp (grid[ky1][kx1]);
+
+        [kx1, ky1] = rotate3 ([cell.kxc, cell.kyc]); // cell rotated around center
+        if (mabs(kx1) <= hnbx && mabs(ky1) <= hnby){
+          cell.addGrp (grid[hnby + ky1][hnbx + kx1]);
+          cell.addGrp (grid[hnby + ky1][hnbx - kx1]);
+        } else cell.grp.truncated = true;
+
+        [kx1, ky1] = rotate3 ([kx1, ky1]); // cell rotated 2nd time around center
+        if (mabs(kx1) <= hnbx && mabs(ky1) <= hnby) {
+          cell.addGrp (grid[hnby + ky1][hnbx + kx1]);
+          cell.addGrp (grid[hnby + ky1][hnbx - kx1]);
+        }  else cell.grp.truncated = true;
+      }
+    // evaluate neighbours
+      cell.neighbours = [];
+      kx1 = kx + 1; ky1 = ky; // neighbour side 0
+      if (kx1 < nbx) cell.neighbours[0] = grid[ky1][kx1];
+      kx1 = kx - 1; ky1 = ky; // neighbour side 2
+      if (kx1 >= 0) cell.neighbours[2] = grid[ky1][kx1];
+      kx1 = kx; ky1 = ky + (cell.upsideDown ? -1 : 1);
+      if (ky1 >= 0 && ky1 < nby) cell.neighbours[1] = grid[ky1][kx1];
+    }; // for kx
+  }; // for ky
+
+// evaluate neighbourhood of groups
+  groups.forEach(grp => {
+    if (grp.truncated) {  // forget truncated groups
+//      removeElement(groups,grp);
+      return;
+    }
+    grp.neighbours = new Set([]);
+    grp.cells.forEach(cell => {
+      cell.neighbours.forEach(ncell => {
+        if (! ncell.grp.truncated) {
+          grp.neighbours.add(ncell.grp); // ignore truncated groups
+        }
+      }) // cells.neighbours.forEach
+    }); // grp.cells.forEach(
+  }); // groups.forEach
+
+} // createGrid
+
+//------------------------------------------------------------------------
+
+function startOver() {
+
+// canvas dimensions
+
+  maxx = window.innerWidth;
+  maxy = window.innerHeight;
+
+  canv.width = maxx;
+  canv.height = maxy;
+  ctx.lineJoin = 'bevel';
+  ctx.lineCap = 'round';
+
+  triWidth = alea(triWidthMin, triWidthMax);
+  triRad = triWidth / 2;
+  triHeight = triWidth * rac3s2;
+
+  hnby = mfloor((maxy / triHeight - 1) / 2); // the full array has 2 * hnbx + 1 rows
+  hnbx = mfloor (maxx / triWidth);
+  nbx = 1 + 2 * hnbx;
+  nby = 1 + 2 * hnby;
+
+  if (nbx < 3 || nby < 3) return false;
+  ctx.clearRect(0,0,maxx,maxy);
+
+  colorMode = intAlea(3);
+  createGrid();
+
+  return true;
+
+} // startOver
+
+//------------------------------------------------------------------------
+
+function mouseClick (event) {
+
+  events.push({event:'click'});;
+
+} // mouseMove
+
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+// beginning of execution
+
+  {
+    canv = document.createElement('canvas');
+    canv.style.position="absolute";
+    document.body.appendChild(canv);
+    ctx = canv.getContext('2d');
+    canv.setAttribute ('title','click me');
+  } // création CANVAS
+  canv.addEventListener('click',mouseClick); // just for initial position
+  events = [{event:'reset'}];
+  requestAnimationFrame (animate);
+
+}); // window load listener
 </script>
 
 
