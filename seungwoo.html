@@ -18,6 +18,24 @@
 
     <link rel="stylesheet" href="stair.css">
 
+<style>
+#start
+
+{
+
+   margin: auto;
+
+   width: 50%;
+
+   padding: 5px;
+
+   width: 100%;
+
+   font-size: 18px;
+}
+
+</style>
+
   </head>
 
   <body>
@@ -95,80 +113,13 @@
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
-
-<script type="text/javascript">
-function div_show2() {document.getElementById("stair2").style.visibility = "visible";}
-function div_show3() {document.getElementById("stair3").style.visibility = "visible";}
-function div_show4() {document.getElementById("stair4").style.visibility = "visible";}
-function div_show5() {document.getElementById("stair5").style.visibility = "visible";}
-function div_show6() {document.getElementById("stair6").style.visibility = "visible";}
-function div_show7() {document.getElementById("stair7").style.visibility = "visible";}
-setTimeout("location.reload()",8000)
-</script>
 <h1 style="padding-top:15px; padding-left:25px"><strong>Stair Code</strong></h1>
 <h3 style="padding-top:15px; padding-left:25px">규칙.</h3>
 <h5 style="padding-left:25px">* 4개 버튼 중 옳은 버튼을 누르면 다음 단계로 이동. 7단계 까지 있음.</h5>
-<h5 style="padding-left:25px">* 8초마다 처음으로 돌아감. 갑자기 화면이 사라지면 오른쪽 아래 top 버튼 누르고 올라와야함.</h5>
-<h5 style="padding-left:25px">* 이거 깨면 제작자에게 쌍X 할 수 있음. 오른쪽 아래에 이메일 보내는 곳 있음ㅋ.</h5>
-<div class="row">
-  <h1 style="padding-top:15px; padding-left:30px; width:100%">1st</h1>
-    <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-    <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-    <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target1" onclick="div_show2()" class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-    <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-</div>
-    <div class="row" style="visibility: hidden;" id="stair2">
-    <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target1">2nd</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target" onclick="div_show3()" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-    <div class="row"style="visibility: hidden;" id="stair3">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target">3rd</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target2" onclick="div_show4()" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-        <div class="row"style="visibility: hidden;" id="stair4">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target2">4th</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target3" onclick="div_show5()" class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
+<h5 style="padding-left:25px">* 주기적으로 처음으로 돌아감. 갑자기 화면이 사라지면 오른쪽 아래 TOP 버튼 누르고 올라와야함.</h5>
+<h5 style="padding-left:25px">* 깬거 인증 ㅆ가능.</h5>
 
-    <div class="row"style="visibility: hidden;" id="stair5">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target3">5th</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target4"onclick="div_show6()" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-    <div class="row"style="visibility: hidden;" id="stair6">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target4">6th</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="#target5" onclick="div_show7()" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-
-    <div class="row"style="visibility: hidden;"id="stair7">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target5">7th</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="Seungwoo\Project_Login\Login.html" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-    <div class="row"style="visibility: hidden;">
-      <h1 style="padding-top:15px; padding-left:30px; width:100%"><a name="target5">7th</a></h1>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>1</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>2</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a class="btn btn-sm animated-button thar-one"style="font-size:20px;"><strong>3</strong></a> </div>
-        <div class="col-md-3col-sm-3col-xs-6"style="padding:50px"> <a href="Seungwoo\Project_Login\Login.html" class="btn btn-sm animated-button thar-two"style="font-size:20px;"><strong>4</strong></a> </div>
-    </div>
-
+<a href="seungwoo1.html"><input id="start" type="button" name="btn1" value="동의하고 시작하기" style="margin:50px;width:80%"></a>
 
     <!-- 위로가기 버튼 (오른쪽 하단에 고정) -->
     <div style="position: fixed; bottom: 5px; right: 5px;">
