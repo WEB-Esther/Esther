@@ -27,7 +27,3 @@ print('''<!doctype html>
 </body>
 </html>
 '''.format(title=pageId, desc=description))
-
-html_file = open('html_file.html', 'w')
-html_file.write(html_text)
-html_file.close()
